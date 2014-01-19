@@ -121,20 +121,7 @@ class CartItem extends AbstractItemCollection implements CartItemInterface
 
     public function getExtPrice($includeTax=true, $recursive=false)
     {
-        $price = 0;
-        if($includeTax) {
-            $price = ($this->getPrice() + $this->getTax()) * $this->getQuantity();
-        } else {
-            $price = $this->getPrice() * $this->getQuantity();
-        }
-
-        if($recursive) {
-            foreach($this->getItems() as $item) {
-                $price += $item->getExtPrice($includeTax, $recursive);
-            }
-        }
-
-        return $price;
+        return $this->getPrice($includeTax, $recursive) * $this->getQuantity();
     }
 
     public function getExtTax($recursive=false)
